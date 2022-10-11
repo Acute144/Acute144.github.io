@@ -1,0 +1,82 @@
+<head>
+<title>Solver</title>
+<script>
+    function solve() {
+    
+    const waveGroups = [[[98, 100], [], [99, 144]], [[90, 92], [91], [93]], [[96], [94], [95, 97]],
+    [[98,99], [100], [144]], [[92], [90], [91,93]], [[91, 92], [93], [90]], [[144], [99,100], [98]],
+    [[94,95], [96], [97]], [[100], [144], [98, 99]], [[97], [95], [94, 96]], [[], [91], [90, 92, 93]],
+    [[94,96], [95, 97], []], [[94,97], [96], [95]], [[96], [95], [94, 97]], [[144], [98], [99, 100]],
+    [[90,92], [93], [91]]];
+    
+    const form_array = [document.getElementById("gOne").value, document.getElementById("gTwo").value, document.getElementById("gThree").value];
+    
+    let groups = [];
+    for (let i = 0; i < 3; i++) {
+        groups.push(parseInt(form_array[i]));
+    }
+    
+    if ((groups[0] != 90 && groups[0] != 91 && groups[0] != 92 && groups[0] != 93) || (groups[1] != 94 && groups[1] != 95 && groups[1] != 96 && groups[1] != 97) || (groups[2] != 98 && groups[2] != 99 && groups[2] != 100 && groups[2] != 144)) {
+        document.getElementById("path").innerHTML = "Incorrect Data Was Entered, Please enter one valid group number into each box.";
+        return false;
+    }
+    
+    let nDirList = [];
+    //Loops for finding the correct groups for each column
+    //NOTE: unoptimised, arrays are called more than needed
+    for (let c = 0; c < waveGroups.length; c++) {
+        for (let r = 0; r < waveGroups[c].length; r++) {
+            for (let o = 0; o < waveGroups[c][r].length; o++) {
+                for (let g = 0; g < groups.length; g++) {
+                    if (groups[g] == waveGroups[c][r][o]) {
+                        nDirList.push(r);
+                    }
+                }
+            }
+        }
+    }
+    
+    let dirList = [];
+    for (let n = 0; n < nDirList.length; n++) {
+        if (nDirList[n] == 0) {dirList.push("^");
+        } else if (nDirList[n] == 1) {dirList.push(">");
+        } else if (nDirList[n] == 2) {dirList.push("v");}
+    }
+    
+    const arrows = dirList.join('')
+    
+    document.getElementById("path").innerHTML = arrows;
+    return false;
+    }
+</script>
+</head>
+<body>
+<h2><center><b><u>Welcome to the Online Solver for the Art of the Blade.</center></b></u></h2>
+<h3><center>Before using this solver you need to read the google document which outlines everything you need to know about the solver and the level randomization itself. The document can be found <a href="https://docs.google.com/document/d/10zdNF8iF1sZiTq4nUjsb9-Rb71XjmDx-h3voFJ8IRWE/edit?usp=sharing">here</a>.</h3>
+<br>
+
+<form onsubmit = "return solve()">
+    <label>Group One: </label>
+    <input type="text" id="gOne">
+    <br><br>
+    <label>Group Two: </label>
+    <input type="text" id="gTwo">
+    <br><br>
+    <label>Group Three: </label>
+    <input type="text" id="gThree">
+    <br><br>
+    <input type="submit" value="Solve">
+</form>
+
+<br>
+<h3><u>The Solution is:</u></h3>
+<h4 id="path">*waiting for input*</h4>
+<br>
+<p>Each arrow represents a column in the wave part and the direction of the arrow represents which 'orb' to go through (which one of the three circles). </p>
+<p>'^' means the top orb, '>' means the middle orb and 'v' means the bottom orb</p>
+<br>
+<p>All Other Details Can Be Found <a href="/">Here</a>.</p>
+
+
+
+</body>
