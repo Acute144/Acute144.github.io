@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body{
+                background-color: rgb(231, 141, 141);
+                position: absolute;
+                margin: 0px 0px;
+                width: min-content;
+            }
+            .button{
+                background-color: black;
+                border: 1px;
+                border-style: none;
+                border-color: rgb(231, 141, 141);
+                position: absolute;
+                overflow: hidden;
+                cursor: pointer;
+                font-family: sans-serif;
+                font-size: 25px;
+                text-align: center;
+                margin: 0px 0px;
+                transition-duration: 0.3s;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="buttons"></div>
+        <script>
+            const nButX = 20;
+            const nButY = Math.ceil(nButX/2);
+            const nBut = nButX*nButY;
+            const bgc='rgb(231, 141, 141)';
+            const btc='rgb(212, 127, 127)';
+            function findflips(start){
+                let final = [[start]];
+                let all = []
+                let next = [];
+                let nxtL = [start];
+                let cur = 0;
+                while(all.length<(nBut)){
+                    for(let i=0; i<nxtL.length; i++){
+                        let origin = nxtL[i]
+                        //left
+                        cur=origin-1;
+                        if(!all.includes(cur)){
+                            if(cur>0){
+                                next.push(cur);
+                                all.push(cur);
+                            };
+                        };
+                        //right
+                        cur=origin+1;
+                        if(!all.includes(cur)){
+                            if(cur<=nBut){
+                                next.push(cur);
+                                all.push(cur);
+                            };
+                        };
+                        //up
+                        cur=origin-nButX;
+                        if(!all.includes(cur)){
+                            if(cur > 0){
+                                next.push(cur);
+                                all.push(cur);
+                            };
+                        };
+                        //down
+                        cur=origin+nButX;
+                        if(!all.includes(cur)){
+                            if(cur <= nBut){
+                                next.push(cur);
+                                all.push(cur);
+                            };
+                        };
+                    };
+                    final.push(next);
+                    nxtL=next;
+                    next=[];
+                };
+                return final;
+            };
+            function flip(fCol, sButn){
+                const flipOrder = findflips(parseInt(sButn.id));
+                let arr = 0;
+                function nxt(){
+                    for(let i=0; i<flipOrder[arr].length; i++){
+                        var button = document.getElementById(flipOrder[arr][i].toString());
+                        button.style.backgroundColor=fCol;
+                    };
+                    arr++
+                    if(arr==flipOrder.length){
+                        clearTimeout(inval);
+                    };
+                };
+                nxt();
+                var inval = setInterval(nxt, 2000/nButX);
+            };
+            function clicked(button){
+                if (button.style.backgroundColor==btc){
+                    flip('black', button);
+                } else{flip(bgc, button);};
+            };
+            function hov(button){
+                if(button.style.backgroundColor==bgc){
+                    button.style.backgroundColor=btc;
+                } else{button.style.transform='scale(0.9)';};
+            };
+            function unhov(button){
+                if(button.style.backgroundColor==btc){
+                    button.style.backgroundColor=bgc;
+                };
+                button.style.transform='scale(1)';
+            };
+            var buttons = document.getElementById("buttons");
+            var w = window.innerWidth;
+            var h = window.innerHeight; 
+            const xmult = w/nButX;
+            const ymult = h/nButY;
+            let i=1;
+            for(let y = 0; y<nButY*ymult; y+=ymult){
+                for(let x = 0; x<nButX*xmult; x+=xmult){
+                    var butn = document.createElement("button");
+                    butn.onclick=function(){clicked(this);};
+                    butn.onmouseenter=function(){hov(this);};
+                    butn.onmouseleave=function(){unhov(this);};
+                    butn.style.height=(ymult).toString()+'px';
+                    butn.style.width=(xmult).toString()+'px';
+                    butn.style.top=y.toString()+'px';
+                    butn.style.left=x.toString()+'px';
+                    butn.style.borderColor=bgc;
+                    butn.id=i.toString();
+                    butn.className='button';
+                    buttons.appendChild(butn);
+                    i++;
+                };
+            };
+        </script>
+    </body>
+</html>

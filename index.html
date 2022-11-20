@@ -1,12 +1,166 @@
-<title>Main Page</title>
-<h2><center><b><u>Welcome to the Main Site for Solving the Art of the Blade.</center></b></u></h2>
-<h3><center>Linked below is all of my available resources for solving the art of the blade wave part. Good Luck!</center></h3>
-<ul>
-<li><a href="form.html">The Online Solver Program</a></li>
-<br>
-<li><a href="https://docs.google.com/document/d/10zdNF8iF1sZiTq4nUjsb9-Rb71XjmDx-h3voFJ8IRWE/edit?usp=sharing">The Google Document (Must Read)</a></li>
-<br>
-<li><a href="https://github.com/Acute144/The-Art-of-the-Blade-Path-Solver">The Python Terminal Solver Program (requires python to be downloaded and installed on your computer)</a></li>
-<br>
-<li><a href="https://github.com/Acute144/Acute144.github.io">The Source Code for This Website</a></li>
-</ul>
+<html>
+    <head>
+        <style>
+            :root{
+                --but-col: #6184f5;
+            }
+            body{
+                background-color: #f37b77;
+                width: 100vw;
+                height: 100vh;
+                margin: 0px 0px;
+                overflow: hidden;
+            }
+            #buttons{
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                left: 50%;
+                top: 50%;
+            }
+            #mainb{
+                background-color: var(--but-col);
+                font-size: 80px;
+                border: none;
+                border-radius: 100%;
+                width: 200px;
+                height: 200px;
+                text-align: center;
+                transition-duration: 350ms;
+                position: absolute;
+                cursor: pointer;
+                color: var(--but-col);
+            }
+            #circle{
+                border-radius: 100%;
+                border: 10px solid var(--but-col);
+                transition-duration: 2s;
+                width:50px;
+                height:50px;
+                position: inherit;
+            }
+            #black{
+                background-color: #000;
+                width: 100vw;
+                height: 100vh;
+                margin: 0px 0px;
+                top:100vh;
+                position: absolute;
+            }
+            #blade{
+                background-color: var(--but-col);
+                font-size: 50px;
+                border: none;
+                width: 400px;
+                height: 250px;
+                text-align: center;
+                transition-duration: 350ms;
+                position: absolute;
+                cursor: pointer;
+                color: #fff;
+                top:130vh;
+                left:20%;
+            }
+            #butnProg{
+                background-color: var(--but-col);
+                font-size: 50px;
+                border: none;
+                width: 400px;
+                height: 250px;
+                text-align: center;
+                transition-duration: 350ms;
+                position: absolute;
+                cursor: pointer;
+                color: #fff;
+                top:130vh;
+                right: 20%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="buttons" style="transition-duration:250ms">
+            <div id="circle"></div>
+            <button id="mainb" onclick="clicked()" onmouseenter="hover()" onmouseleave="unhover()">
+                <p id="mbtxt" style="margin:0%; transition-duration: 300ms;">↓</p>
+            </button>
+        </div>
+        <div id="main" style="transition-duration:500ms">
+            <div id="black"></div>
+            <button id="blade" onclick="bldClick()" onmouseenter="bldHover()" onmouseleave="bldUnhover()">
+                <p>The Art of the Blade Path Solver</p>
+            </button>
+            <button id="butnProg" onclick="btnClick()" onmouseenter="btnHover()" onmouseleave="btnUnhover()">
+                <p>Button Program</p>
+            </button>
+        </div>
+        <script>
+            mainc=document.getElementById("main");
+            bwrap=document.getElementById("buttons");
+            mainb=document.getElementById("mainb");
+            mbtxt=document.getElementById('mbtxt');
+            circle=document.getElementById("circle");
+            bld=document.getElementById('blade');
+            butnProg=document.getElementById('butnProg');
+            var h = window.innerHeight; 
+            function pulse(){
+                //mainb.style.color='#ffffff';
+                mainb.style.transform='scale(0.8)';
+                circle.style.transform='scale(15)';
+                circle.style.opacity='0';
+                setTimeout(unpulse, 400);
+            };
+            function unpulse(){
+                //mainb.style.color='rgb(0, 119, 255)';
+                mainb.style.transform='scale(1)';
+                setTimeout(function(){
+                    circle.style.transform='scale(1)';
+                    setTimeout(function(){
+                        circle.style.opacity='1';
+                    }, 1200);
+                }, 1600);
+            };
+            function hover(){
+                clearInterval(pVal);
+                bwrap.style.transform='translate(0px, -15px)';
+                mainc.style.transform='translate(0px, -50px)';
+                mainb.style.color='#fff';
+                mainb.style.transform='scale(0.9)';
+                mbtxt.style.transform='rotate(180deg)';
+            };
+            function unhover(){
+                if(bwrap.style.transitionDuration!="500ms"){
+                    bwrap.style.transform='translate(0px, 15px)';
+                    mainc.style.transform='translate(0px, 50px)';
+                    mainb.style.color='#6184f5';
+                    mainb.style.transform='scale(1)';
+                    mbtxt.style.transform='rotate(0deg)';
+                };
+            };
+            function clicked(){
+                h = window.innerHeight; 
+                bwrap.style.transitionDuration='500ms';
+                bwrap.style.transform='translate(0px, -' + h.toString() + 'px)';
+                mainc.style.transform='translate(0px, -' + h.toString() + 'px)';
+            };
+            function bldClick(){
+                location.href = "blade.html"
+            };
+            function bldHover(){
+                bld.style.transform='scale(0.9)'
+            };
+            function bldUnhover(){
+                bld.style.transform='scale(1)'
+            };
+            function btnClick(){
+                location.href = "buttons.html"
+            };
+            function btnHover(){
+                butnProg.style.transform='scale(0.9)'
+            };
+            function btnUnhover(){
+                butnProg.style.transform='scale(1)'
+            };
+            var pVal = setInterval(pulse, 7000);
+        </script>
+    </body>
