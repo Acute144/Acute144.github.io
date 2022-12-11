@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <style>
@@ -6,8 +7,6 @@
             }
             body{
                 background-color: #f37b77;
-                width: 100vw;
-                height: 100vh;
                 margin: 0px 0px;
                 overflow: hidden;
             }
@@ -18,12 +17,13 @@
                 align-items: center;
                 left: 50%;
                 top: 50%;
+                transition-duration: 300ms;
             }
             #mainb{
                 background-color: var(--but-col);
-                font-size: 80px;
                 border: none;
-                border-radius: 100%;
+                font-size: 80px;
+                border-radius: 50%;
                 width: 200px;
                 height: 200px;
                 text-align: center;
@@ -31,6 +31,7 @@
                 position: absolute;
                 cursor: pointer;
                 color: var(--but-col);
+                padding: 0px 0px;
             }
             #circle{
                 border-radius: 100%;
@@ -39,6 +40,7 @@
                 width:50px;
                 height:50px;
                 position: inherit;
+                pointer-events: none;
             }
             #black{
                 background-color: #000;
@@ -49,32 +51,78 @@
                 position: absolute;
             }
             #blade{
-                background-color: var(--but-col);
-                font-size: 50px;
+                font-size: 60px;
                 border: none;
-                width: 400px;
-                height: 250px;
+                width: 500px;
+                height: 300px;
                 text-align: center;
                 transition-duration: 350ms;
-                position: absolute;
+                position: relative;
                 cursor: pointer;
                 color: #fff;
                 top:130vh;
-                left:20%;
+                left:14.6%;
+                scale: 0.8;
+            }
+            #bladeButn{
+                background-image: url("images/20220919225810_1.jpg");
+                width: 400px;
+                height: 250px;
+                border: none;
+                cursor: pointer;
+                background-size: cover;
+                opacity: 0.3;
+                left:3rem;
+                transition-duration: 200ms;
+                position:absolute;
+            }
+            #bladeTxt{
+                pointer-events: none;
+                text-align: center;
+                transition-duration: 350ms;
+                font-family: sans-serif;
+                position:absolute;
+                width: inherit;
+                height: 60px;
+                margin: 0px 0px;
+                top:20%; 
             }
             #butnProg{
-                background-color: var(--but-col);
-                font-size: 50px;
+                font-size: 60px;
                 border: none;
-                width: 400px;
-                height: 250px;
+                width: 500px;
+                height: 300px;
                 text-align: center;
                 transition-duration: 350ms;
-                position: absolute;
-                cursor: pointer;
+                position: relative;
                 color: #fff;
-                top:130vh;
-                right: 20%;
+                top:99vh;
+                left: 60%;
+                scale: 0.8;
+            }
+            #butnProgButn{
+                background-image: url("images/ButnImg.png");
+                width: 400px;
+                height: 250px;
+                border: none;
+                cursor: pointer;
+                background-size: cover;
+                opacity: 0.3;
+                left:3rem;
+                transition-duration: 200ms;
+                position:absolute;
+            }
+            #butnProgTxt{
+                pointer-events: none;
+                text-align: center;
+                white-space: nowrap;
+                transition-duration: 350ms;
+                font-family: sans-serif;
+                position:absolute;
+                width: inherit;
+                height: 60px;
+                margin: 0px 0px;
+                top:30%; 
             }
         </style>
     </head>
@@ -82,17 +130,19 @@
         <div id="buttons" style="transition-duration:250ms">
             <div id="circle"></div>
             <button id="mainb" onclick="clicked()" onmouseenter="hover()" onmouseleave="unhover()">
-                <p id="mbtxt" style="margin:0%; transition-duration: 300ms;">↓</p>
+                <p id="mbtxt" style="margin:0%; transition-duration: 300ms; pointer-events: none;">↓</p>
             </button>
         </div>
         <div id="main" style="transition-duration:500ms">
             <div id="black"></div>
-            <button id="blade" onclick="bldClick()" onmouseenter="bldHover()" onmouseleave="bldUnhover()">
-                <p>The Art of the Blade Path Solver</p>
-            </button>
-            <button id="butnProg" onclick="btnClick()" onmouseenter="btnHover()" onmouseleave="btnUnhover()">
-                <p>Button Program</p>
-            </button>
+            <div id="blade">
+                <button id="bladeButn" onclick="bldClick()" onmouseenter="bldHover()" onmouseleave="bldUnhover()"></button>
+                <p id="bladeTxt">The Art of the Blade Path Solver</p>
+            </div>
+            <div id="butnProg">
+                <button id="butnProgButn" onclick="btnClick()" onmouseenter="btnHover()" onmouseleave="btnUnhover()"></button>
+                <p id="butnProgTxt">Button Program</p>
+            </div>
         </div>
         <script>
             mainc=document.getElementById("main");
@@ -101,7 +151,10 @@
             mbtxt=document.getElementById('mbtxt');
             circle=document.getElementById("circle");
             bld=document.getElementById('blade');
+            bldButn=document.getElementById('bladeButn');
+            bldTxt=document.getElementById('bladeTxt');
             butnProg=document.getElementById('butnProg');
+            butnProgTxt=document.getElementById('butnProgTxt');
             var h = window.innerHeight; 
             function pulse(){
                 //mainb.style.color='#ffffff';
@@ -121,46 +174,57 @@
                 }, 1600);
             };
             function hover(){
-                clearInterval(pVal);
-                bwrap.style.transform='translate(0px, -15px)';
-                mainc.style.transform='translate(0px, -50px)';
+                //bwrap.style.transform='translate(0px, -15px)';
+                //mainc.style.transform='translate(0px, -50px)';
                 mainb.style.color='#fff';
                 mainb.style.transform='scale(0.9)';
                 mbtxt.style.transform='rotate(180deg)';
+                clearInterval(pVal);
             };
             function unhover(){
-                if(bwrap.style.transitionDuration!="500ms"){
-                    bwrap.style.transform='translate(0px, 15px)';
-                    mainc.style.transform='translate(0px, 50px)';
-                    mainb.style.color='#6184f5';
-                    mainb.style.transform='scale(1)';
-                    mbtxt.style.transform='rotate(0deg)';
-                };
+                //bwrap.style.transform='translate(0px, 15px)';
+                //mainc.style.transform='translate(0px, 50px)';
+                mainb.style.color='#6184f5';
+                mainb.style.transform='scale(1)';
+                mbtxt.style.transform='rotate(0deg)';
             };
             function clicked(){
                 h = window.innerHeight; 
                 bwrap.style.transitionDuration='500ms';
-                bwrap.style.transform='translate(0px, -' + h.toString() + 'px)';
-                mainc.style.transform='translate(0px, -' + h.toString() + 'px)';
+                bwrap.style.transform='translate(0px, -100vh)';
+                mainc.style.transform='translate(0px, -100vh)';
             };
             function bldClick(){
-                location.href = "blade.html"
+                location.href = "blade.html";
             };
             function bldHover(){
-                bld.style.transform='scale(0.9)'
+                bld.style.transform='scale(1.2)';
+                bldButn.style.opacity='1';
+                bldTxt.style.transform='scale(0.5)';
+                bldTxt.style.opacity='0';
             };
             function bldUnhover(){
-                bld.style.transform='scale(1)'
+                bld.style.transform='scale(1)';
+                bldButn.style.opacity='0.3';
+                bldTxt.style.transform='scale(1)';
+                bldTxt.style.opacity='1';
             };
             function btnClick(){
-                location.href = "buttons.html"
+                location.href = "buttons.html";
             };
             function btnHover(){
-                butnProg.style.transform='scale(0.9)'
+                butnProg.style.transform='scale(1.2)';
+                butnProgButn.style.opacity='1';
+                butnProgTxt.style.transform='scale(0.5)';
+                butnProgTxt.style.opacity='0';
             };
             function btnUnhover(){
-                butnProg.style.transform='scale(1)'
+                butnProg.style.transform='scale(1)';
+                butnProgButn.style.opacity='0.3';
+                butnProgTxt.style.transform='scale(1)';
+                butnProgTxt.style.opacity='1';
             };
             var pVal = setInterval(pulse, 7000);
         </script>
     </body>
+</html>
